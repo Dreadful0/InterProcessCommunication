@@ -15,12 +15,14 @@ socket.connect({
 		console.log(data.splitedTask[data.currentPart]);
 		socket.write(JSON.stringify(data.currentPart));
 		
-		var result = processData(data.splitedTask[data.currentPart]);
-		console.log('Data processed (by client): ' + data.currentPart);
-		console.log(result);
-		var returnedData = {partID: data.currentPart, result: result};
-		socket.write(JSON.stringify(returnedData));
-		socket.destroy();
+		setTimeout(function(){
+			var result = processData(data.splitedTask[data.currentPart]);
+			console.log('Data processed (by client): ' + data.currentPart);
+			console.log(result);
+			var returnedData = {partID: data.currentPart, result: result};
+			socket.write(JSON.stringify(returnedData));
+			socket.destroy();
+		}, 10000);
 	});
 });
 
@@ -31,6 +33,6 @@ function processData(data) {
 			result[i] = item*2;
 		}
 		else result[i] = null;
-		});
+	});
 	return result;
 }
